@@ -16,7 +16,7 @@ import (
 func DBinstance() *mongo.Client {
 	err := godotenv.Load(".env")
 	if err != nil {
-		log.Fatal("ERROR: loading .env file")
+		log.Fatal("Error loading .env file")
 	}
 	mongoDB := os.Getenv("MONGODB_URL")
 	client, err := mongo.NewClient(options.Client().ApplyURI(mongoDB))
@@ -35,8 +35,7 @@ func DBinstance() *mongo.Client {
 
 var Client *mongo.Client = DBinstance()
 
-func OpenCollection(client *mongo.Client, collectionTime string) *mongo.Collection {
-	var collection *mongo.Collection = (*mongo.Collection)(client.Database("cluster0").Collection(collectionTime))
-
+func OpenCollection(client *mongo.Client, collectionName string) *mongo.Collection {
+	var collection *mongo.Collection = client.Database("cluster0").Collection(collectionName)
 	return collection
 }
